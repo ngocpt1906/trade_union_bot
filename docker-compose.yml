@@ -1,0 +1,9 @@
+services:
+  bot:
+    build: .
+    container_name: trade-union-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Ho_Chi_Minh
