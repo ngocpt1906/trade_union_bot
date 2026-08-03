@@ -374,7 +374,6 @@ export async function handleWorkerCallback(ctx: Context): Promise<boolean> {
         ? `Đã cập nhật ca: ${worker.name} → Ca ${worker.shift}`
         : "Không tìm thấy công nhân.",
     );
-    await ctx.reply("Menu chính:", { reply_markup: mainKeyboard() });
     return true;
   }
 
@@ -418,7 +417,6 @@ export async function handleWorkerCallback(ctx: Context): Promise<boolean> {
     clearSession(ownerId);
     await ctx.answerCallbackQuery({ text: "Đã ngưng" });
     await ctx.editMessageText(`Đã ngưng: ${worker.name} (Ca ${worker.shift})`);
-    await ctx.reply("Menu chính:", { reply_markup: mainKeyboard() });
     return true;
   }
 

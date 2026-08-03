@@ -161,7 +161,6 @@ export async function handleMachineCallback(ctx: Context): Promise<boolean> {
     }
     await ctx.answerCallbackQuery({ text: "Đã xóa" });
     await ctx.editMessageText(`Đã xóa máy: ${machine.name}`);
-    await ctx.reply("Menu chính:", { reply_markup: mainKeyboard() });
     return true;
   }
 
