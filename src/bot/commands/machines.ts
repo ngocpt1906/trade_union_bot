@@ -157,7 +157,6 @@ export async function handleMachineCallback(ctx: Context): Promise<boolean> {
       await ctx.editMessageText(
         `Không xóa được «${machine.name}»: còn ${result.blockedByWorkers} công nhân đang gán máy này. Hãy chuyển họ sang máy khác trước.`,
       );
-      await ctx.reply("Menu chính:", { reply_markup: mainKeyboard() });
       return true;
     }
     await ctx.answerCallbackQuery({ text: "Đã xóa" });

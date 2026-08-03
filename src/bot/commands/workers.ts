@@ -257,7 +257,6 @@ export async function handleWorkerCallback(ctx: Context): Promise<boolean> {
       await ctx.editMessageText(
         `Đã thêm: ${formatWorkerLine(worker, machine.name)}`,
       );
-      await ctx.reply("Menu chính:", { reply_markup: mainKeyboard() });
     } catch (err) {
       await ctx.answerCallbackQuery({ text: "Lỗi" });
       await ctx.reply(err instanceof Error ? err.message : "Không thêm được.");
@@ -401,7 +400,6 @@ export async function handleWorkerCallback(ctx: Context): Promise<boolean> {
           ? `Đã cập nhật máy: ${worker.name} → ${machine.name}`
           : "Không tìm thấy công nhân.",
       );
-      await ctx.reply("Menu chính:", { reply_markup: mainKeyboard() });
     } catch (err) {
       await ctx.answerCallbackQuery({ text: "Lỗi" });
       await ctx.reply(err instanceof Error ? err.message : "Không cập nhật được.");
