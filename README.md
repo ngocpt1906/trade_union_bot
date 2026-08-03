@@ -38,6 +38,14 @@ Xem hướng dẫn chi tiết: [deploy/oracle-cloud.md](deploy/oracle-cloud.md)
 
 Tóm tắt: tạo VM Ubuntu Always Free → cài Docker → clone repo → tạo `.env` → `docker compose up -d --build`. MongoDB vẫn dùng Atlas free.
 
+## CI/CD Contabo VPS
+
+Đã có Docker trên Contabo? Setup auto-deploy khi push `main`:
+
+→ [deploy/contabo-cicd.md](deploy/contabo-cicd.md)
+
+Cần thêm GitHub Secrets: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, `VPS_APP_DIR`.
+
 ## Kiểm tra lịch ca
 
 ```bash
