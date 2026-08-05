@@ -157,7 +157,3 @@ export function formatStatsMessage(
 export function monthTitle(year: number, month: number): string {
   return `Bảng công ${formatMonthVn(year, month)}`;
 }
-
-export function rangeTitle(start: string, end: string): string {
-  return `Bảng công ${formatDateVn(start)} → ${formatDateVn(end)}`;
-}

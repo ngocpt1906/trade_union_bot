@@ -7,7 +7,6 @@ export const BTN = {
   addEvent: "📝 Thêm phát sinh",
   deleteEvent: "🗑️ Xóa phát sinh",
   statsMonth: "📊 Thống kê tháng",
-  statsRange: "📅 Thống kê khoảng",
   addMachine: "🏭 Thêm máy",
   listMachines: "📋 Danh sách máy",
   editMachine: "✏️ Sửa máy",
@@ -31,7 +30,6 @@ export function mainKeyboard(): Keyboard {
     .text(BTN.deleteEvent)
     .row()
     .text(BTN.statsMonth)
-    .text(BTN.statsRange)
     .row()
     .text(BTN.addMachine)
     .text(BTN.listMachines)

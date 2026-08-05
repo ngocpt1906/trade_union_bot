@@ -72,9 +72,7 @@ export type SessionState =
   | { kind: "delete_pick_worker" }
   | { kind: "delete_pick_date"; workerId: string; workerName: string }
   // stats
-  | { kind: "stats_month" }
-  | { kind: "stats_range_start" }
-  | { kind: "stats_range_end"; start: string };
+  | { kind: "stats_month" };
 
 type Entry = { state: SessionState; updatedAt: number };
 

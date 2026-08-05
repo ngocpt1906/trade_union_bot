@@ -71,7 +71,6 @@ Ngày mốc `01/08/2026`: Ca A đêm cuối, Ca B nghỉ, Ca C sáng đầu. Chu
 | `/newcase` | Thêm phát sinh |
 | `/removecase` | Xóa phát sinh |
 | `/monthreport` | Thống kê tháng |
-| `/reportrange` | Thống kê khoảng |
 | `/addmachine` | Thêm máy |
 | `/listmachine` | Danh sách máy |
 | `/editmachine` | Sửa tên máy |

@@ -17,7 +17,6 @@ import {
 import {
   handleStatsText,
   startStatsMonth,
-  startStatsRange,
 } from "./commands/stats.js";
 import {
   handleListWorkers,
@@ -38,7 +37,6 @@ export const BOT_COMMANDS = [
   { command: "newcase", description: "Thêm phát sinh" },
   { command: "removecase", description: "Xóa phát sinh" },
   { command: "monthreport", description: "Thống kê tháng" },
-  { command: "reportrange", description: "Thống kê khoảng" },
   { command: "addmachine", description: "Thêm máy" },
   { command: "listmachine", description: "Danh sách máy" },
   { command: "editmachine", description: "Sửa máy" },
@@ -81,7 +79,6 @@ export function createBot(): Bot {
   bot.command("newcase", (ctx) => startAddEvent(ctx));
   bot.command("removecase", (ctx) => startDeleteEvent(ctx));
   bot.command("monthreport", (ctx) => startStatsMonth(ctx));
-  bot.command("reportrange", (ctx) => startStatsRange(ctx));
   bot.command("addmachine", (ctx) => startAddMachine(ctx));
   bot.command("listmachine", (ctx) => handleListMachines(ctx));
   bot.command("editmachine", (ctx) => startEditMachine(ctx));
@@ -131,9 +128,6 @@ export function createBot(): Bot {
         return;
       case BTN.statsMonth:
         await startStatsMonth(ctx);
-        return;
-      case BTN.statsRange:
-        await startStatsRange(ctx);
         return;
       case BTN.addMachine:
         await startAddMachine(ctx);
