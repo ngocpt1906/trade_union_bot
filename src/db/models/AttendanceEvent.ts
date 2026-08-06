@@ -5,7 +5,7 @@ export type EventType = (typeof EVENT_TYPES)[number];
 
 const attendanceEventSchema = new Schema(
   {
-    ownerTelegramId: { type: Number, required: true, index: true },
+    ownerKey: { type: String, required: true, index: true },
     workerId: {
       type: Schema.Types.ObjectId,
       ref: "Worker",
@@ -21,10 +21,10 @@ const attendanceEventSchema = new Schema(
 );
 
 attendanceEventSchema.index(
-  { ownerTelegramId: 1, workerId: 1, date: 1, type: 1 },
+  { ownerKey: 1, workerId: 1, date: 1, type: 1 },
   { unique: true },
 );
-attendanceEventSchema.index({ ownerTelegramId: 1, date: 1 });
+attendanceEventSchema.index({ ownerKey: 1, date: 1 });
 
 export type AttendanceEventDoc = InferSchemaType<typeof attendanceEventSchema> & {
   _id: Types.ObjectId;

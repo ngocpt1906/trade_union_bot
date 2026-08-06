@@ -1,22 +1,7 @@
 import { InlineKeyboard, Keyboard } from "grammy";
+import { BTN } from "../shared/labels.js";
 
-export const BTN = {
-  addWorker: "➕ Thêm người vào tổ",
-  listWorkers: "👥 Hiện danh sách tổ",
-  editWorker: "✏️ Sửa người trong tổ",
-  addEvent: "📝 Thêm phát sinh",
-  deleteEvent: "🗑️ Xóa phát sinh",
-  statsMonth: "📊 Thống kê tháng",
-  addMachine: "🏭 Thêm máy",
-  listMachines: "📋 Danh sách máy",
-  editMachine: "✏️ Sửa máy",
-  deleteMachine: "🗑️ Xóa máy",
-  deactivate: "🚫 Ngưng công nhân",
-  cancel: "❌ Hủy",
-  today: "Hôm nay",
-  thisMonth: "Tháng này",
-  skipNote: "Bỏ qua ghi chú",
-} as const;
+export { BTN };
 
 export function mainKeyboard(): Keyboard {
   return new Keyboard()

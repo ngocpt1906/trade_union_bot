@@ -9,7 +9,8 @@ function required(name: string): string {
 }
 
 export const config = {
-  telegramBotToken: required("TELEGRAM_BOT_TOKEN"),
+  telegramBotToken: process.env.TELEGRAM_BOT_TOKEN?.trim() || "",
+  discordBotToken: process.env.DISCORD_BOT_TOKEN?.trim() || "",
   mongodbUri: required("MONGODB_URI"),
   shiftEpoch: process.env.SHIFT_EPOCH?.trim() || "2026-08-01",
   timezone: process.env.TZ?.trim() || "Asia/Ho_Chi_Minh",

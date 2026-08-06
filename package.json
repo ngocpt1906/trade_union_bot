@@ -1,7 +1,7 @@
 {
   "name": "trade-union-bot",
   "version": "1.0.0",
-  "description": "Telegram bot chấm công tổ công đoàn",
+  "description": "Telegram + Discord bot chấm công tổ công đoàn",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",
     "grammy": "^1.45.1",
     "mongoose": "^9.9.1"

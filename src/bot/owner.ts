@@ -1,10 +1,11 @@
 import type { Context } from "grammy";
+import { telegramOwnerKey } from "../shared/ownerKey.js";
 
-/** Telegram user id of the current operator (each user owns an isolated team). */
-export function getOwnerId(ctx: Context): number {
+/** Owner key of the current Telegram operator (each user owns an isolated team). */
+export function getOwnerId(ctx: Context): string {
   const id = ctx.from?.id;
   if (id === undefined) {
     throw new Error("Không xác định được Telegram user");
   }
-  return id;
+  return telegramOwnerKey(id);
 }

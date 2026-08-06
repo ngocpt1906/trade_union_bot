@@ -3,44 +3,42 @@ import { Machine, type MachineDoc } from "../db/models/Machine.js";
 import { Worker } from "../db/models/Worker.js";
 
 export async function createMachine(
-  ownerTelegramId: number,
+  ownerKey: string,
   name: string,
 ): Promise<MachineDoc> {
   const trimmed = name.trim();
   if (trimmed.length < 1) throw new Error("Tên máy không hợp lệ");
 
   const existing = await Machine.findOne({
-    ownerTelegramId,
+    ownerKey,
     name: trimmed,
     active: true,
   }).exec();
   if (existing) throw new Error(`Máy «${trimmed}» đã tồn tại`);
 
   return Machine.create({
-    ownerTelegramId,
+    ownerKey,
     name: trimmed,
     active: true,
   });
 }
 
 export async function listActiveMachines(
-  ownerTelegramId: number,
+  ownerKey: string,
 ): Promise<MachineDoc[]> {
-  return Machine.find({ ownerTelegramId, active: true })
-    .sort({ name: 1 })
-    .exec();
+  return Machine.find({ ownerKey, active: true }).sort({ name: 1 }).exec();
 }
 
 export async function getMachineById(
-  ownerTelegramId: number,
+  ownerKey: string,
   id: string,
 ): Promise<MachineDoc | null> {
   if (!Types.ObjectId.isValid(id)) return null;
-  return Machine.findOne({ _id: id, ownerTelegramId, active: true }).exec();
+  return Machine.findOne({ _id: id, ownerKey, active: true }).exec();
 }
 
 export async function renameMachine(
-  ownerTelegramId: number,
+  ownerKey: string,
   id: string,
   name: string,
 ): Promise<MachineDoc | null> {
@@ -48,7 +46,7 @@ export async function renameMachine(
   if (trimmed.length < 1) throw new Error("Tên máy không hợp lệ");
 
   const clash = await Machine.findOne({
-    ownerTelegramId,
+    ownerKey,
     name: trimmed,
     active: true,
     _id: { $ne: id },
@@ -56,18 +54,18 @@ export async function renameMachine(
   if (clash) throw new Error(`Máy «${trimmed}» đã tồn tại`);
 
   return Machine.findOneAndUpdate(
-    { _id: id, ownerTelegramId, active: true },
+    { _id: id, ownerKey, active: true },
     { name: trimmed },
     { new: true },
   ).exec();
 }
 
 export async function deactivateMachine(
-  ownerTelegramId: number,
+  ownerKey: string,
   id: string,
 ): Promise<{ machine: MachineDoc | null; blockedByWorkers: number }> {
   const assigned = await Worker.countDocuments({
-    ownerTelegramId,
+    ownerKey,
     machineId: id,
     active: true,
   }).exec();
@@ -76,7 +74,7 @@ export async function deactivateMachine(
   }
 
   const machine = await Machine.findOneAndUpdate(
-    { _id: id, ownerTelegramId, active: true },
+    { _id: id, ownerKey, active: true },
     { active: false },
     { new: true },
   ).exec();

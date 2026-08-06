@@ -4,7 +4,7 @@ import { getMachineById } from "./machineService.js";
 import type { ShiftCode } from "./shiftCalendar.js";
 
 export type CreateWorkerInput = {
-  ownerTelegramId: number;
+  ownerKey: string;
   name: string;
   birthYear: number;
   shift: ShiftCode;
@@ -19,11 +19,11 @@ export type UpdateWorkerInput = {
 };
 
 export async function createWorker(input: CreateWorkerInput): Promise<WorkerDoc> {
-  const machine = await getMachineById(input.ownerTelegramId, input.machineId);
+  const machine = await getMachineById(input.ownerKey, input.machineId);
   if (!machine) throw new Error("Máy không hợp lệ");
 
   return Worker.create({
-    ownerTelegramId: input.ownerTelegramId,
+    ownerKey: input.ownerKey,
     name: input.name.trim(),
     birthYear: input.birthYear,
     shift: input.shift,
@@ -32,31 +32,27 @@ export async function createWorker(input: CreateWorkerInput): Promise<WorkerDoc>
   });
 }
 
-export async function listActiveWorkers(
-  ownerTelegramId: number,
-): Promise<WorkerDoc[]> {
-  return Worker.find({ ownerTelegramId, active: true })
-    .sort({ shift: 1, name: 1 })
-    .exec();
+export async function listActiveWorkers(ownerKey: string): Promise<WorkerDoc[]> {
+  return Worker.find({ ownerKey, active: true }).sort({ shift: 1, name: 1 }).exec();
 }
 
 export async function getWorkerById(
-  ownerTelegramId: number,
+  ownerKey: string,
   id: string,
 ): Promise<WorkerDoc | null> {
   if (!Types.ObjectId.isValid(id)) return null;
-  return Worker.findOne({ _id: id, ownerTelegramId, active: true }).exec();
+  return Worker.findOne({ _id: id, ownerKey, active: true }).exec();
 }
 
 export async function updateWorker(
-  ownerTelegramId: number,
+  ownerKey: string,
   id: string,
   patch: UpdateWorkerInput,
 ): Promise<WorkerDoc | null> {
   if (!Types.ObjectId.isValid(id)) return null;
 
   if (patch.machineId) {
-    const machine = await getMachineById(ownerTelegramId, patch.machineId);
+    const machine = await getMachineById(ownerKey, patch.machineId);
     if (!machine) throw new Error("Máy không hợp lệ");
   }
 
@@ -67,19 +63,19 @@ export async function updateWorker(
   if (patch.machineId !== undefined) update.machineId = patch.machineId;
 
   return Worker.findOneAndUpdate(
-    { _id: id, ownerTelegramId, active: true },
+    { _id: id, ownerKey, active: true },
     update,
     { new: true },
   ).exec();
 }
 
 export async function deactivateWorker(
-  ownerTelegramId: number,
+  ownerKey: string,
   id: string,
 ): Promise<WorkerDoc | null> {
   if (!Types.ObjectId.isValid(id)) return null;
   return Worker.findOneAndUpdate(
-    { _id: id, ownerTelegramId, active: true },
+    { _id: id, ownerKey, active: true },
     { active: false },
     { new: true },
   ).exec();

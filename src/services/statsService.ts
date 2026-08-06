@@ -55,20 +55,20 @@ export function computeDayHours(
 }
 
 export async function buildStats(
-  ownerTelegramId: number,
+  ownerKey: string,
   startDate: string,
   endDate: string,
 ): Promise<WorkerStats[]> {
   const [workers, machines] = await Promise.all([
-    listActiveWorkers(ownerTelegramId),
-    listActiveMachines(ownerTelegramId),
+    listActiveWorkers(ownerKey),
+    listActiveMachines(ownerKey),
   ]);
   const machineNameById = new Map(
     machines.map((m) => [String(m._id), m.name]),
   );
 
   const events = await listEventsForWorkers(
-    ownerTelegramId,
+    ownerKey,
     workers.map((w) => String(w._id)),
     startDate,
     endDate,

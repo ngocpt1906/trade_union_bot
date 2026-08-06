@@ -181,7 +181,7 @@ async function finishEvent(
 ): Promise<void> {
   const ownerId = getOwnerId(ctx);
   const event = await upsertEvent({
-    ownerTelegramId: ownerId,
+    ownerKey: ownerId,
     workerId: payload.workerId,
     date: payload.date,
     type: payload.type,

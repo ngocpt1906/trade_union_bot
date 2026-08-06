@@ -6,7 +6,7 @@ import {
 import { getWorkerById } from "./workerService.js";
 
 export type UpsertEventInput = {
-  ownerTelegramId: number;
+  ownerKey: string;
   workerId: string;
   date: string;
   type: EventType;
@@ -17,7 +17,7 @@ export type UpsertEventInput = {
 export async function upsertEvent(
   input: UpsertEventInput,
 ): Promise<AttendanceEventDoc> {
-  const worker = await getWorkerById(input.ownerTelegramId, input.workerId);
+  const worker = await getWorkerById(input.ownerKey, input.workerId);
   if (!worker) throw new Error("Công nhân không hợp lệ");
 
   const minutes =
@@ -29,13 +29,13 @@ export async function upsertEvent(
 
   const event = await AttendanceEvent.findOneAndUpdate(
     {
-      ownerTelegramId: input.ownerTelegramId,
+      ownerKey: input.ownerKey,
       workerId: input.workerId,
       date: input.date,
       type: input.type,
     },
     {
-      ownerTelegramId: input.ownerTelegramId,
+      ownerKey: input.ownerKey,
       workerId: input.workerId,
       date: input.date,
       type: input.type,
@@ -50,14 +50,14 @@ export async function upsertEvent(
 }
 
 export async function listEventsForWorkers(
-  ownerTelegramId: number,
+  ownerKey: string,
   workerIds: string[],
   startDate: string,
   endDate: string,
 ): Promise<AttendanceEventDoc[]> {
   if (workerIds.length === 0) return [];
   return AttendanceEvent.find({
-    ownerTelegramId,
+    ownerKey,
     workerId: { $in: workerIds },
     date: { $gte: startDate, $lte: endDate },
   })
@@ -66,22 +66,22 @@ export async function listEventsForWorkers(
 }
 
 export async function listEventsForWorkerOnDate(
-  ownerTelegramId: number,
+  ownerKey: string,
   workerId: string,
   date: string,
 ): Promise<AttendanceEventDoc[]> {
-  return AttendanceEvent.find({ ownerTelegramId, workerId, date })
+  return AttendanceEvent.find({ ownerKey, workerId, date })
     .sort({ type: 1 })
     .exec();
 }
 
 export async function deleteEventsForWorkerOnDate(
-  ownerTelegramId: number,
+  ownerKey: string,
   workerId: string,
   date: string,
 ): Promise<number> {
   const result = await AttendanceEvent.deleteMany({
-    ownerTelegramId,
+    ownerKey,
     workerId,
     date,
   }).exec();
@@ -89,13 +89,13 @@ export async function deleteEventsForWorkerOnDate(
 }
 
 export async function deleteEvent(
-  ownerTelegramId: number,
+  ownerKey: string,
   workerId: string,
   date: string,
   type: EventType,
 ): Promise<boolean> {
   const result = await AttendanceEvent.deleteOne({
-    ownerTelegramId,
+    ownerKey,
     workerId,
     date,
     type,

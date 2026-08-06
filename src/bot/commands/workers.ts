@@ -21,7 +21,7 @@ import {
 import { clearSession, getSession, setSession } from "../session.js";
 
 async function machineNameMap(
-  ownerId: number,
+  ownerId: string,
 ): Promise<Map<string, string>> {
   const machines = await listActiveMachines(ownerId);
   return new Map(machines.map((m) => [String(m._id), m.name]));
@@ -247,7 +247,7 @@ export async function handleWorkerCallback(ctx: Context): Promise<boolean> {
     }
     try {
       const worker = await createWorker({
-        ownerTelegramId: ownerId,
+        ownerKey: ownerId,
         name: session.name,
         birthYear: session.birthYear,
         shift: session.shift,
