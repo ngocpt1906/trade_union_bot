@@ -28,7 +28,7 @@ export async function handleListMachines(ctx: Context): Promise<void> {
   const machines = await listActiveMachines(ownerId);
   if (machines.length === 0) {
     await ctx.reply(
-      "Chưa có máy nào. Dùng /addmachine để thêm máy trước khi thêm người.",
+      `Chưa có máy nào. Dùng nút «${BTN.addMachine}» để thêm máy trước khi thêm người.`,
       { reply_markup: mainKeyboard() },
     );
     return;

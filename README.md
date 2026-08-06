@@ -56,26 +56,28 @@ Ngày mốc `01/08/2026`: Ca A đêm cuối, Ca B nghỉ, Ca C sáng đầu. Chu
 
 ## Luồng dùng gợi ý
 
-1. `/addmachine` — thêm máy của tổ
-2. `/addmember` — thêm người (tên → năm sinh → ca → **chọn máy**)
-3. `/newcase` — ghi phát sinh khi có
-4. `/monthreport` — xem bảng công
+Dùng reply keyboard (nút menu dưới khung chat). Gõ `/start` để mở lại menu.
 
-## Lệnh Telegram
+1. **Thêm máy** — thêm máy của tổ
+2. **Thêm người vào tổ** — tên → năm sinh → ca → **chọn máy**
+3. **Thêm phát sinh** — ghi phát sinh khi có
+4. **Thống kê tháng** — xem bảng công
 
-| Lệnh | Mô tả |
+## Menu Telegram
+
+| Nút | Mô tả |
 |---|---|
-| `/addmember` | Thêm người vào tổ |
-| `/listmember` | Hiện danh sách tổ |
-| `/editmember` | Sửa người trong tổ |
-| `/newcase` | Thêm phát sinh |
-| `/removecase` | Xóa phát sinh |
-| `/monthreport` | Thống kê tháng |
-| `/addmachine` | Thêm máy |
-| `/listmachine` | Danh sách máy |
-| `/editmachine` | Sửa tên máy |
-| `/deletemachine` | Xóa máy (chỉ khi không còn người gán) |
-| `/start` | Mở menu |
-| `/huy` | Hủy thao tác đang làm |
+| Thêm người vào tổ | Thêm người vào tổ |
+| Hiện danh sách tổ | Hiện danh sách tổ |
+| Sửa người trong tổ | Sửa người trong tổ |
+| Ngưng công nhân | Ngưng công nhân |
+| Thêm phát sinh | Thêm phát sinh |
+| Xóa phát sinh | Xóa phát sinh |
+| Thống kê tháng | Thống kê tháng |
+| Thêm máy | Thêm máy |
+| Danh sách máy | Danh sách máy |
+| Sửa máy | Sửa tên máy |
+| Xóa máy | Xóa máy (chỉ khi không còn người gán) |
+| Hủy | Hủy thao tác đang làm |
 
 Nếu không có phát sinh, ngày làm theo ca = **12 giờ**; ngày nghỉ theo ca = **0 giờ**.

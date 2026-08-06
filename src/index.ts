@@ -1,4 +1,4 @@
-import { BOT_COMMANDS, createBot } from "./bot/bot.js";
+import { createBot } from "./bot/bot.js";
 import { config } from "./config.js";
 import { connectDb } from "./db/connection.js";
 
@@ -9,8 +9,8 @@ async function main(): Promise<void> {
   console.log(`Shift epoch: ${config.shiftEpoch}`);
 
   const bot = createBot();
-  await bot.api.setMyCommands([...BOT_COMMANDS]);
-  console.log("Telegram commands synced.");
+  await bot.api.deleteMyCommands();
+  console.log("Telegram bot commands cleared.");
 
   await bot.start({
     onStart: (info) => {

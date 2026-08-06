@@ -32,7 +32,7 @@ export async function handleListWorkers(ctx: Context): Promise<void> {
   const workers = await listActiveWorkers(ownerId);
   if (workers.length === 0) {
     await ctx.reply(
-      "Chưa có công nhân nào. Dùng /addmember để thêm (cần có máy trước).",
+      `Chưa có công nhân nào. Dùng nút «${BTN.addWorker}» để thêm (cần có máy trước).`,
       { reply_markup: mainKeyboard() },
     );
     return;
@@ -66,7 +66,7 @@ export async function startAddWorker(ctx: Context): Promise<void> {
   const machines = await listActiveMachines(ownerId);
   if (machines.length === 0) {
     await ctx.reply(
-      "Chưa có máy nào. Hãy thêm máy trước bằng /addmachine.",
+      `Chưa có máy nào. Hãy thêm máy trước bằng nút «${BTN.addMachine}».`,
       { reply_markup: mainKeyboard() },
     );
     return;
@@ -211,9 +211,10 @@ export async function handleWorkerCallback(ctx: Context): Promise<boolean> {
     if (machines.length === 0) {
       await ctx.answerCallbackQuery({ text: "Chưa có máy" });
       clearSession(ownerId);
-      await ctx.reply("Chưa có máy. Thêm máy bằng /addmachine trước.", {
-        reply_markup: mainKeyboard(),
-      });
+      await ctx.reply(
+        `Chưa có máy. Thêm máy bằng nút «${BTN.addMachine}» trước.`,
+        { reply_markup: mainKeyboard() },
+      );
       return true;
     }
     setSession(ownerId, {

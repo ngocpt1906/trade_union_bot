@@ -29,20 +29,6 @@ import {
 import { BTN, mainKeyboard } from "./menus.js";
 import { clearSession } from "./session.js";
 
-/** Commands synced to Telegram via setMyCommands. */
-export const BOT_COMMANDS = [
-  { command: "addmember", description: "Thêm người vào tổ" },
-  { command: "listmember", description: "Hiện danh sách tổ" },
-  { command: "editmember", description: "Sửa người trong tổ" },
-  { command: "newcase", description: "Thêm phát sinh" },
-  { command: "removecase", description: "Xóa phát sinh" },
-  { command: "monthreport", description: "Thống kê tháng" },
-  { command: "addmachine", description: "Thêm máy" },
-  { command: "listmachine", description: "Danh sách máy" },
-  { command: "editmachine", description: "Sửa máy" },
-  { command: "deletemachine", description: "Xóa máy" },
-] as const;
-
 export function createBot(): Bot {
   const bot = new Bot(config.telegramBotToken);
 
@@ -53,6 +39,7 @@ export function createBot(): Bot {
     await next();
   });
 
+  // /start keeps the Telegram "Start" entry point so users can open the reply keyboard.
   bot.command("start", async (ctx) => {
     const userId = ctx.from!.id;
     clearSession(userId);
@@ -61,32 +48,14 @@ export function createBot(): Bot {
         "Chào bạn.",
         "Mỗi tài khoản Telegram quản lý tổ riêng (dữ liệu không dùng chung).",
         "",
-        "Gợi ý bắt đầu:",
-        "1. /addmachine — thêm máy",
-        "2. /addmember — thêm người (chọn ca + máy)",
-        "3. /newcase — ghi phát sinh khi có",
-        "4. /monthreport — xem bảng công",
-        "",
-        "Dùng lệnh / hoặc nút menu bên dưới.",
+        "Gợi ý bắt đầu (dùng nút menu bên dưới):",
+        `1. ${BTN.addMachine}`,
+        `2. ${BTN.addWorker} (chọn ca + máy)`,
+        `3. ${BTN.addEvent} khi có phát sinh`,
+        `4. ${BTN.statsMonth} để xem bảng công`,
       ].join("\n"),
       { reply_markup: mainKeyboard() },
     );
-  });
-
-  bot.command("addmember", (ctx) => startAddWorker(ctx));
-  bot.command("listmember", (ctx) => handleListWorkers(ctx));
-  bot.command("editmember", (ctx) => startEditWorker(ctx));
-  bot.command("newcase", (ctx) => startAddEvent(ctx));
-  bot.command("removecase", (ctx) => startDeleteEvent(ctx));
-  bot.command("monthreport", (ctx) => startStatsMonth(ctx));
-  bot.command("addmachine", (ctx) => startAddMachine(ctx));
-  bot.command("listmachine", (ctx) => handleListMachines(ctx));
-  bot.command("editmachine", (ctx) => startEditMachine(ctx));
-  bot.command("deletemachine", (ctx) => startDeleteMachine(ctx));
-
-  bot.command("huy", async (ctx) => {
-    clearSession(ctx.from!.id);
-    await ctx.reply("Đã hủy thao tác.", { reply_markup: mainKeyboard() });
   });
 
   bot.on("callback_query:data", async (ctx) => {
@@ -99,7 +68,7 @@ export function createBot(): Bot {
   bot.on("message:text", async (ctx) => {
     const text = ctx.message.text.trim();
 
-    if (text === BTN.cancel || text === "/cancel") {
+    if (text === BTN.cancel) {
       clearSession(ctx.from!.id);
       await ctx.reply("Đã hủy thao tác.", { reply_markup: mainKeyboard() });
       return;
@@ -146,7 +115,7 @@ export function createBot(): Bot {
         return;
       default:
         await ctx.reply(
-          "Dùng lệnh / (ví dụ /addmember) hoặc chọn nút menu. Gõ /start để xem hướng dẫn.",
+          "Chọn nút menu bên dưới. Gõ /start để xem hướng dẫn.",
           { reply_markup: mainKeyboard() },
         );
     }

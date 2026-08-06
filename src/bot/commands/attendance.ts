@@ -25,9 +25,10 @@ export async function startAddEvent(ctx: Context): Promise<void> {
   const ownerId = getOwnerId(ctx);
   const workers = await listActiveWorkers(ownerId);
   if (workers.length === 0) {
-    await ctx.reply("Chưa có công nhân. Hãy thêm bằng /addmember trước.", {
-      reply_markup: mainKeyboard(),
-    });
+    await ctx.reply(
+      `Chưa có công nhân. Hãy thêm bằng nút «${BTN.addWorker}» trước.`,
+      { reply_markup: mainKeyboard() },
+    );
     return;
   }
   setSession(ownerId, { kind: "attendance_pick_worker" });
